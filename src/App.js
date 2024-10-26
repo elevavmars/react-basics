@@ -1,18 +1,18 @@
 import { useState } from 'react';
 
 function App() {
-  const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
-  const [idade, setIdade] = useState('');
+  const [nome, setNome] = useState('');   // valor inicial
+  const [email, setEmail] = useState('');   // valor inicial
+  const [idade, setIdade] = useState('');   // valor inicial
 
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});   // retorna um bagui vazio
 
   function handleRegister(e) {
-    e.preventDefault();
+    e.preventDefault();   // impede que renderize infinitamente
 
 
     alert('Usuário registrado com sucesso')
-    setUser({
+    setUser({    //recebe e agrupa os valores do formulario
       nome: nome,
       idade: idade,
       email: email,
@@ -24,7 +24,7 @@ function App() {
     <div>
       <h1>Cadastrando usuário</h1>
 
-      <form onSubmit={handleRegister}>
+      <form onSubmit={handleRegister}> 
 
         <label>Nome:</label><br />
         <input
@@ -49,21 +49,22 @@ function App() {
 
         <button type="submit">Registrar</button>
 
-      </form>
+      </form> 
 
       <br /><br />
 
       <div>
 
-        <span>Bem vindo: {user.nome}</span><br />
-        <span>Idade: {user.idade}</span><br />
-        <span>Email: {user.email}</span><br />
+        <span>Bem vindo: {user.nome}</span><br />   
+        <span>Idade: {user.idade}</span><br />    
+        <span>Email: {user.email}</span><br />    
 
       </div>
 
     </div>
 
   );
+
 }
 
 export default App;
