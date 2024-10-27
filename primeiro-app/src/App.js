@@ -1,23 +1,40 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
   const [input, setInput] = useState('');
-  const [tarefas, setTarefas] = useState([
-    'Pagar conta de luz',
-    'Estudar JS'
-  ]);
+  const [tarefas, setTarefas] = useState(() => {
+    const tarefasStorage = localStorage.getItem('@tarefa');
+    return tarefasStorage ? JSON.parse(tarefasStorage) : [
+      'Pagar a conta de luz',
+      'Estudar React JS'
+    ];
+  });
+  
+  // Quando um componente é montado na tela o useEffect é chamado
+  useEffect(() => {
+    const tarefasStorage = localStorage.getItem('tarefa');
+
+    if (tarefasStorage) {
+      setTarefas(JSON.parse(tarefasStorage))
+    }
+
+  }, []); // Caso tenha algo nessa array então sempre q oq tiver na arry sofrer alteração o useEffect será chamado
+
+  useEffect(() => {
+    localStorage.setItem('tarefa', JSON.stringify(tarefas))
+  }, [tarefas]); // setItem cria um item no locaStorage chamado @tarefa e transforma em string
+
 
   function handleRegister(e) {
     e.preventDefault();
 
     setTarefas([...tarefas, input]);
-    setInput('');
   }
 
   return (
 
     <div>
-      <h1>Cadastrando usuário</h1>
+      <h1>lista</h1>
 
       <form onSubmit={handleRegister}>
         <label>Nome da tarefa:</label><br />
@@ -35,7 +52,7 @@ function App() {
 
       <div>
         {tarefas.map(tarefa => (
-          
+
           <li key={tarefa}>{tarefa}</li>
 
         ))}
